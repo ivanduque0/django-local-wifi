@@ -1,0 +1,63 @@
+version: '3.3'
+
+services:
+
+   postgres:
+      image: postgres:14-alpine
+      #image: 02da44b1d4a6
+
+      container_name: postgres
+      
+      #restart: always
+
+      ports:
+         - 43:5432
+      volumes:
+         - ./postgresdata:/var/lib/postgresql/data
+      env_file:
+         - .env.postgres
+
+   web:
+      user: "${UID}:${GID}"
+      
+      image: webdjango:V0.1
+
+      container_name: web
+
+      #build: ./tesisweb
+      #image: webdjango:v0.8
+      #command: python manage.py runserver 0.0.0.0:8000
+      command: gunicorn tesisweb.wsgi:application --bind 0.0.0.0:8000
+      volumes:
+         #- ~/Desktop/codigostesis/appdocker/tesisweb:/usr/src/app
+         - ./tesisweb/web:/home/app/web/web
+         - ./tesisweb/tesisweb:/home/app/web/tesisweb
+         - ./static_volume:/home/app/web/static
+         - ./media_volume:/home/app/web/media
+      #ports:
+         #- 8282:8000
+      expose:
+         - 8000
+      env_file:
+         - .env.web
+      depends_on:
+         - postgres 
+      privileged: true
+      
+         
+   nginx:
+      image: webnginx:V0.1
+
+      container_name: nginx
+
+      volumes:
+         - ./static_volume:/home/app/web/static
+         - ./media_volume:/home/app/web/media
+      ports:
+         - 1010:80
+      depends_on:
+         - web
+   
+   
+      
+   
