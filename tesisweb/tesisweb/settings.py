@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 #SECRET_KEY = 'django-insecure-&8obmcszqc!6!#6-u_=y7o0rj48=wc8@v5@p9v9)mrg@-h#$7@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get("DEBUG", default=1))
+DEBUG = int(os.environ.get("DEBUG", default=0))
 #DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
@@ -181,8 +181,6 @@ REST_FRAMEWORK = {
 
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(" ")
 
-AUTH_USER_MODEL = 'web.User'
-
 # SIMPLE_JWT = {
 #     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
 #     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
@@ -190,8 +188,8 @@ AUTH_USER_MODEL = 'web.User'
 
 # CSRF_COOKIE_SAMESITE = 'Strict'
 # SESSION_COOKIE_SAMESITE = 'Strict'
-CSRF_COOKIE_HTTPONLY = False  # False since we will grab it via universal-cookies
-SESSION_COOKIE_HTTPONLY = False
+# CSRF_COOKIE_HTTPONLY = False  # False since we will grab it via universal-cookies
+# SESSION_COOKIE_HTTPONLY = False
 # CSRF_COOKIE_NAME = 'XSRF-TOKEN'
 # CSRF_HEADER_NAME = 'HTTP_X_XSRF_TOKEN'
 # CSRF_COOKIE_NAME = 'XSRF-TOKEN'

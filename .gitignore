@@ -1,0 +1,5 @@
+postgresdata
+tesisweb/tesisweb/__pycache__
+tesisweb/web/__pycache__
+tesisweb/web/migrations/*
+tesisweb/web/migrations/__init__.py

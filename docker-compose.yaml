@@ -4,11 +4,10 @@ services:
 
    postgres:
       image: postgres:14-alpine
-      #image: 02da44b1d4a6
 
       container_name: postgres
       
-      #restart: always
+      restart: always
 
       ports:
          - 43:5432
@@ -20,43 +19,91 @@ services:
    web:
       user: "${UID}:${GID}"
       
-      image: webdjango:V0.1
+      restart: always
+
+      image: ivanduque0/hostlocal-django:V0.1
 
       container_name: web
-
-      #build: ./tesisweb
-      #image: webdjango:v0.8
-      #command: python manage.py runserver 0.0.0.0:8000
+      
       command: gunicorn tesisweb.wsgi:application --bind 0.0.0.0:8000
       volumes:
-         #- ~/Desktop/codigostesis/appdocker/tesisweb:/usr/src/app
          - ./tesisweb/web:/home/app/web/web
          - ./tesisweb/tesisweb:/home/app/web/tesisweb
-         - ./static_volume:/home/app/web/static
-         - ./media_volume:/home/app/web/media
       #ports:
          #- 8282:8000
       expose:
          - 8000
       env_file:
-         - .env.web
+         - .env.manager
       depends_on:
          - postgres 
       privileged: true
       
          
    nginx:
-      image: webnginx:V0.1
+      image: ivanduque0/hostlocal-nginx:V0.1
+
+      restart: always
 
       container_name: nginx
 
-      volumes:
-         - ./static_volume:/home/app/web/static
-         - ./media_volume:/home/app/web/media
       ports:
          - 1010:80
       depends_on:
          - web
+
+   dbmaker:
+   
+      image: ivanduque0/dbmakermanager:V0.3
+      
+      volumes:
+         - ./dbmaker:/app
+         
+      command: python3 codigo.py
+         
+      env_file:
+         - .env.manager
+         
+      depends_on:
+         - postgres
+
+   dbmanagerall:
+   
+      image: ivanduque0/dbmakermanager:V0.3
+
+      container_name: dbmanagerall
+      
+      restart: always
+      
+      command: python3 codigo.py
+      
+      volumes:
+         - ./allmanager:/app
+         
+      env_file:
+         - .env.manager
+      
+      depends_on:
+         - postgres
+   
+   ping:
+   
+      image: ivanduque0/dbmakermanager:V0.3
+
+      container_name: ping
+      
+      restart: always
+      
+      command: python3 codigo.py
+      
+      volumes:
+         - ./pingdispositivos:/app
+         
+      env_file:
+         - .env.manager
+      
+      depends_on:
+         - postgres
    
    
       
