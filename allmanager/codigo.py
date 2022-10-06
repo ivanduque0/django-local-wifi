@@ -240,13 +240,13 @@ while True:
                             usuario_heroku= cursorheroku.fetchall()
                             cedula=usuario_heroku[0][0]
                             nombre=usuario_heroku[0][1]
-                            cursorlocal.execute('''INSERT INTO web_usuarios (cedula, nombre)
-                            VALUES (%s, %s, %s)''', (cedula, nombre))
+                            cursorlocal.execute('''INSERT INTO web_usuarios (cedula, nombre, id_usuario)
+                            VALUES (%s, %s, %s);''', (cedula, nombre, ''))
                             connlocal.commit()
                     listausuariosheroku=[]
                     listausuarioslocal=[]
                 etapa=4
-   
+
             if etapa==4:
                 cursorlocal.execute('SELECT * FROM web_dispositivos')
                 dispositivos_local= cursorlocal.fetchall()

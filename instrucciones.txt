@@ -1,0 +1,85 @@
+Editar el archivo ".env.manager" y darle valor 
+a lasvariables de entorno correspondientes
+
+ir a la carpeta desde la terminal y ejectuar
+el siguiente comando para crear la base de datos y
+ejecutar el backend local:
+"docker-compose up -d postgres web nginx"
+
+
+cuando se termine de ejcutar el comando anterior,
+introducir el siguiente comando para crear 
+las tablas de dispositivos y de los dias acumulados.
+EN LA TERMINAL DEBE APARECER EL MENSAJE:se ha cerrado la conexion a la base de datos
+"docker-compose up dbmaker"
+
+
+cuando se termine de ejcutar el comando anterior,
+introducir el siguiente comando para hacerle
+ping a los dispositivos y empezar a guardar su estado
+en la base de datos local
+"docker-compose up -d ping"
+
+cuando se termine de ejcutar el comando anterior,
+introducir el siguiente comando y seguir las instrucciones 
+para crear las tablas del backend de la base de datos
+local
+"docker exec -it web sh"
+luego de introducir este comando se debe escribir
+lo siguiente: python3 manage.py makemigrations
+y luego escribir:  python3 manage.py migrate
+por ultimo presionar las tecla ctrl + D para salir
+del contenedor
+
+Una vez finalizado el paso anterior introducir el siguiente
+comando para iniciar el contenedor encargado de traer y
+registrar informacion de la base de datos principal
+"docker-compose up -d dbmanagerall"
+una vez introducido el comando, se debe
+escribir el siguiente: docker exec -it dbmanagerall bash
+Luego se debe loguear en heroku dentro del cobntenedor,
+para esto debe introducir el siguiente comando:
+heroku login -i
+luego introducir las credenciales de heroku
+Despues de esto es conveniente ir a la 
+pagina de heroku, minimizar la terminal para usarla Despues
+y seguir los siguientes pasos:
+1 loguearse en la web
+2 ir a account settings
+3 ir a la pestana applications
+4 dar click donde dice Create authorization
+5 Ingresar el nombre del contrato en description
+6 dejando en blanco Expires after, presionar
+el boton create
+7 copiar el Authorization token
+
+Despues de seguir los pasos anteriores,
+regresar a la terminal que se habia
+minimizado, luego en la terminal introducir el comando:
+"cd .." y luego el comando: "cd root"
+una vez hecho eso, ingresar el siguiente comando:
+"nano .netrc" , una vez hehco eso se abrira un editor
+de texto, con algo parecido a lo siguiente:
+
+machine api.heroku.com
+  login ivan6a69@gmail.com
+  password c56ebf7b-c517-4c0a-a7b4-a2d849e8b5ce
+machine git.heroku.com
+  login ivan6a69@gmail.com
+  password c56ebf7b-c517-4c0a-a7b4-a2d849e8b5ce
+
+
+se debe reemplazar lo que esta a la derecha de donde
+dicer password por el Authorization token que se correspondientes
+en desde la pagina. Una vez reemplazado ambos password,
+presionar a la vez las tecla ctrl + X,
+luego presionar la tecla Y, y por ultima presionar enter
+para guardar los cambios
+
+despues de haber hecho eso presionar las tecla ctrl + D
+para salir del contenedor, y posteriormente introducir
+el siguiente comando para reiniciar el contenedor:
+"docker-compose restart dbmanagerall"
+
+Si se hicieron todos los pasos correctamente ya todo
+deberia estar listo y funcional

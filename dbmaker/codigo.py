@@ -21,24 +21,15 @@ descripcion_acceso3=os.environ.get('RAZON_ACCESO3')
 descripcion_acceso4=os.environ.get('RAZON_ACCESO4')
 
 
-dispositivos=[acceso1, acceso2, acceso3, acceso4, 
-              camara1, camara2, camara3, camara4, SERVIDOR_LOCAL,
-            #   camara5, camara6, camara7, camara7
+dispositivos=[acceso1, acceso2, acceso3, acceso4,
+              SERVIDOR_LOCAL,
               ]
 
 dispositivos_dict ={acceso1:descripcion_acceso1, 
                     acceso2:descripcion_acceso2, 
                     acceso3:descripcion_acceso3, 
                     acceso4:descripcion_acceso4, 
-                    camara1:descripcion_camara1, 
-                    camara2:descripcion_camara2, 
-                    camara3:descripcion_camara3, 
-                    camara4:descripcion_camara4, 
                     SERVIDOR_LOCAL:'SERVIDOR LOCAL',
-                    # camara5:descripcion_camara5, 
-                    # camara6:descripcion_camara6, 
-                    # camara7:descripcion_camara7, 
-                    # camara8:descripcion_camara8,
                     }
 
 while True:
