@@ -31,7 +31,7 @@ def aperturaconcedida(nombref, fechaf, horaf, contratof, cedulaf, acceso):
             urllib.request.urlopen(f'{accesodict[acceso]}/on')
             interacciones.objects.create(nombre=nombref, fecha=fechaf, hora=horaf, razon=razondict[acceso], contrato=contratof, cedula=cedulaf)
         except:
-            interacciones.objects.create(nombre=nombref, fecha=fechaf, hora=horaf, razon=razondict[acceso], contrato=f'fallo_{razondict[acceso]}', cedula=cedulaf)
+            interacciones.objects.create(nombre=nombref, fecha=fechaf, hora=horaf, razon=f'fallo_{razondict[acceso]}', contrato=contratof, cedula=cedulaf)
         finally:
             pass
         	     
